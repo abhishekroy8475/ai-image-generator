@@ -1,5 +1,5 @@
 import express from 'express'
-import { generateImage } from '../controllers/dolleControllers.js'
+import { generateImage } from '../controllers/dalleControllers.js'
 
 const router = express.Router()
 
