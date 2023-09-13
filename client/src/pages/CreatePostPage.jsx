@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { preview } from '../assets'
 import { FormField, Loader } from '../components'
 import { getRandomPrompt } from '../utils'
@@ -25,7 +26,31 @@ const CreatePostPage = () => {
 
   const handleSubmit = () => {}
 
-  const generateImage = () => {}
+  const generateImage = async () => {
+    if(form.prompt) {
+      try {
+        setGeneratingImg(true)
+
+        const { data } = await axios.post(
+          'http://localhost:8080/api/v1/dalle',
+          { prompt: form.prompt },
+          {
+            headers: { 
+              "Content-type": "application/json" 
+            } 
+          }
+        )
+
+        setForm({...form, photo: data.photo})
+      } catch (error) {
+        alert(error)        
+      } finally {
+        setGeneratingImg(false)
+      }
+    } else {
+      alert('Please provide proper prompt')
+    }
+  }
 
   return (
     <section className="max-w-7xl mx-auto">
