@@ -18,9 +18,20 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false)
   const [allPosts, setAllPosts] = useState(null)
   const [searchText, setSearchText] = useState('')
-  const [searchedResults, setSearchedResults] = useState(null);
+  const [searchedResults, setSearchedResults] = useState(null)
+  const [searchTimeout, setSearchTimeout] = useState(null)
 
-  const handleSearchChange = (e) => {}
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = allPosts.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()) || item.prompt.toLowerCase().includes(searchText.toLowerCase()))
+        setSearchedResults(searchResult)
+      }, 500)
+    )
+  }
 
   const fetchPost = async () => {
     setLoading(true)
