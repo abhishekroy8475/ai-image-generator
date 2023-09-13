@@ -24,7 +24,34 @@ const CreatePostPage = () => {
     setForm({ ...form, prompt: randomPrompt });
   }
 
-  const handleSubmit = () => {}
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    if(form.prompt && form.photo) {
+      setLoading(true)
+
+      try {
+        const { data } = await axios.post(
+          'http://localhost:8080/api/v1/post',
+          { form },
+          {
+            headers: { 
+              "Content-type": "application/json" 
+            } 
+          }
+        )
+
+        alert('Success')
+        navigate('/')
+      } catch (error) {
+        alert(error) 
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      alert('Please generate an image with proper details')
+    }
+  }
 
   const generateImage = async () => {
     if(form.prompt) {
