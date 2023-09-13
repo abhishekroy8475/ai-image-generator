@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Card, FormField, Loader } from '../components'
+import axios from 'axios'
 
 const RenderCards = ({ data, title }) => {
   if (data?.length > 0) {
@@ -20,6 +21,33 @@ const HomePage = () => {
   const [searchedResults, setSearchedResults] = useState(null);
 
   const handleSearchChange = (e) => {}
+
+  const fetchPost = async () => {
+    setLoading(true)
+
+    try {
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/post",
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      if (data.success) {
+        setAllPosts(data.data)
+      }
+    } catch (error) {
+      alert(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchPost()
+  }, [])
 
   return (
     <section className="max-w-7xl mx-auto">
