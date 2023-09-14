@@ -32,7 +32,7 @@ const CreatePostPage = () => {
 
       try {
         const { data } = await axios.post(
-          'http://localhost:8080/api/v1/post',
+          import.meta.env.VITE_BASE_URL + '/post',
           { form },
           {
             headers: { 
@@ -59,7 +59,7 @@ const CreatePostPage = () => {
         setGeneratingImg(true)
 
         const { data } = await axios.post(
-          'http://localhost:8080/api/v1/dalle',
+          import.meta.env.VITE_BASE_URL + '/dalle',
           { prompt: form.prompt },
           {
             headers: { 

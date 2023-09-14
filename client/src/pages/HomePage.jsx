@@ -38,7 +38,7 @@ const HomePage = () => {
 
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/api/v1/post",
+        import.meta.env.VITE_BASE_URL + "/post",
         {
           headers: {
             'Content-Type': 'application/json'
@@ -57,6 +57,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
+    console.log(import.meta.env.VITE_BASE_URL)
     fetchPost()
   }, [])
 
